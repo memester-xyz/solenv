@@ -12,6 +12,8 @@ forge install memester-xyz/solenv
 
 ## Usage
 
+Firstly, it's very important that you do not commit your `.env` file. So, it goes without saying, but add it to your `.gitignore`! This repo has one only for an example.
+
 TODO
 
 ## Contributing
