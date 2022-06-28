@@ -26,15 +26,20 @@ function setUp() public {
     Solenv.config();
 }
 
-// Inside a script
+// Inside a script, load a file with a different name
 function run() public {
-    Solenv.config();
+    Solenv.config(".env.prod");
 
     // Continue with your script...
 }
 ```
 
-3. You can then use the [standard "env" cheatcodes](https://book.getfoundry.sh/cheatcodes/external.html) in order to read your variables. e.g. `envString`, `envUint`, etc.
+3. You can then use the [standard "env" cheatcodes](https://book.getfoundry.sh/cheatcodes/external.html) in order to read your variables. e.g. `envString`, `envUint`, `envBool`, etc.
+```solidity
+string memory apiKey = vm.envString("API_KEY");
+uint256 retries = vm.envUint("RETRIES");
+bool ouputLogs = vm.envBool("OUTPUT_LOGS");
+```
 
 ## Example
 
