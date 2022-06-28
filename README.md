@@ -41,6 +41,11 @@ uint256 retries = vm.envUint("RETRIES");
 bool ouputLogs = vm.envBool("OUTPUT_LOGS");
 ```
 
+### Notes
+
+ - Comments start with `#` and must be on a newline
+ - If you set a key twice, the last value in the file is used
+
 ## Example
 
 [Check out the test to see how to use this library.](./test/Solenv.t.sol)
