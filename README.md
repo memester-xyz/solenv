@@ -16,7 +16,7 @@ Firstly, it's very important that you do not commit your `.env` file. It should 
 
 1. Add this import to your script or test:
 ```solidity
-import {Solenv} from "src/Solenv.sol";
+import {Solenv} from "solenv/Solenv.sol";
 ```
 
 2. Call `.config()` somewhere. It defaults to using `.env` in your project root, but you can pass another string as a parameter to load another file in instead.
