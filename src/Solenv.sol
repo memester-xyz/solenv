@@ -9,9 +9,6 @@ library Solenv {
     Vm constant vm = Vm(address(bytes20(uint160(uint256(keccak256("hevm cheat code"))))));
 
     function config(string memory filename) public {
-        // TODO:
-        // Allow comments in the .env file
-
         string[] memory inputs = new string[](3);
         inputs[0] = "sh";
         inputs[1] = "-c";
@@ -25,15 +22,17 @@ library Solenv {
 
         strings.slice memory lineDelim = "\n".toSlice();
         strings.slice memory keyDelim = "=".toSlice();
+        strings.slice memory commentDelim = "#".toSlice();
 
         uint256 length = data.count(lineDelim) + 1;
         for (uint256 i = 0; i < length; i++) {
             strings.slice memory line = data.split(lineDelim);
-            string memory key = line.split(keyDelim).toString();
-
-            // Ignore empty lines
-            if (bytes(key).length != 0) {
-                vm.setEnv(key, line.toString());
+            if (!line.startsWith(commentDelim)) {
+                string memory key = line.split(keyDelim).toString();
+                // Ignore empty lines
+                if (bytes(key).length != 0) {
+                    vm.setEnv(key, line.toString());
+                }
             }
         }
     }

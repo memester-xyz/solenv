@@ -5,7 +5,9 @@ import "forge-std/Test.sol";
 import {console} from "forge-std/console.sol";
 import {Solenv} from "src/Solenv.sol";
 
+
 contract SolenvTest is Test {
+
     function setUp() public {}
 
     function testEnvLoad() public {
@@ -31,6 +33,11 @@ contract SolenvTest is Test {
         Solenv.config(".env.test");
 
         assertEq(vm.envString("SOME_VERY_IMPORTANT_API_KEY"), "adifferentone");
+    }
+
+    function testCommentsWork() public {
+        vm.expectRevert(bytes("environment variable not found"));
+        vm.envString('#VARIABLE');
     }
 }
 
