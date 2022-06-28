@@ -11,7 +11,7 @@ contract ContractTest is Test {
 
     function testExample() public {
         bytes memory result = Solenv.invokeStuff();
-        string memory output = abi.decode(result, (string));
-        console.log(output);
+        string memory data = abi.decode(result, (string));
+        console.log(data);
     }
 }
