@@ -48,7 +48,12 @@ bool ouputLogs = vm.envBool("OUTPUT_LOGS");
 
 ## Example
 
-[Check out the test to see how to use this library.](./test/Solenv.t.sol)
+We have example usage for both [tests](./test/Solenv.t.sol) and [scripts](./script/Solenv.s.sol).
+
+To see the script in action, you can run:
+```
+forge script SolenvScript
+```
 
 ## Contributing
 
