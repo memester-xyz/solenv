@@ -41,10 +41,13 @@ uint256 retries = vm.envUint("RETRIES");
 bool ouputLogs = vm.envBool("OUTPUT_LOGS");
 ```
 
+4. You must enable [ffi](https://book.getfoundry.sh/cheatcodes/ffi.html) in order to use the library. You can either pass the `--ffi` flag to any forge commands you run (e.g. `forge script Script --ffi`), or you can add `ffi = true` to your `foundry.toml` file.
+
 ### Notes
 
  - Comments start with `#` and must be on a newline
  - If you set a key twice, the last value in the file is used
+ - It assumes you are running on a UNIX based machine with `sh`, `cast` and `xxd` installed.
 
 ## Example
 
