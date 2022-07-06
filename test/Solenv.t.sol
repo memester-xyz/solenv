@@ -4,11 +4,11 @@ pragma solidity ^0.8.13;
 import "forge-std/Test.sol";
 import {Solenv} from "src/Solenv.sol";
 
-contract SolenvTest is Test {
+contract SolenvTest is Test, Solenv {
     function setUp() public {}
 
     function testEnvLoad() public {
-        Solenv.config();
+        config();
 
         assertEq(vm.envString("WHY_USE_THIS_KEY"), "because we can can can");
         assertEq(vm.envString("SOME_VERY_IMPORTANT_API_KEY"), "omgnoway");
@@ -33,9 +33,9 @@ contract SolenvTest is Test {
     }
 }
 
-contract SolenvInSetupTest is Test {
+contract SolenvInSetupTest is Test, Solenv {
     function setUp() public {
-        Solenv.config();
+        config();
     }
 
     function testEnvLoad() public {

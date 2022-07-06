@@ -5,9 +5,9 @@ import "forge-std/Script.sol";
 import {console} from "forge-std/console.sol";
 import {Solenv} from "src/Solenv.sol";
 
-contract SolenvScript is Script {
+contract SolenvScript is Script, Solenv {
     function setUp() public {
-        Solenv.config();
+        config();
     }
 
     function run() public {

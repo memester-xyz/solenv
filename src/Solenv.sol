@@ -1,13 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.13;
 
+import "forge-std/Script.sol";
 import {Vm} from "forge-std/Vm.sol";
 import {strings} from "solidity-stringutils/strings.sol";
 
-library Solenv {
+contract Solenv is Script {
     using strings for *;
-
-    Vm constant vm = Vm(address(bytes20(uint160(uint256(keccak256("hevm cheat code"))))));
 
     function config(string memory filename) public {
         string[] memory inputs = new string[](3);
