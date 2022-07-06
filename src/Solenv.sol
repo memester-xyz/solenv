@@ -9,7 +9,7 @@ library Solenv {
 
     Vm constant vm = Vm(address(bytes20(uint160(uint256(keccak256("hevm cheat code"))))));
 
-    function config(string memory filename) public {
+    function config(string memory filename) internal {
         string[] memory inputs = new string[](3);
         inputs[0] = "sh";
         inputs[1] = "-c";
@@ -38,7 +38,7 @@ library Solenv {
         }
     }
 
-    function config() public {
+    function config() internal {
         config(".env");
     }
 }
