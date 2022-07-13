@@ -25,9 +25,10 @@ library SolenvHelper {
 contract SolenvTest is Test {
     function testEnv() public {
         // act
-        Solenv.config();
+        bool success = Solenv.config();
 
         // assert
+        assertEq(success, true);
         assertEq(vm.envString("WHY_USE_THIS_KEY"),              "because we can can can");
         assertEq(vm.envString("SOME_VERY_IMPORTANT_API_KEY"),   "omgnoway");
         assertEq(vm.envString("A_COMPLEX_ENV_VARIABLE"),        "y&2U9xiEINv!vM8Gez");
@@ -43,8 +44,9 @@ contract SolenvTest is Test {
     }
 
     function testEnv_AnotherFilename() public {
-        Solenv.config(".env.test");
+        bool success = Solenv.config(".env.test");
 
+        assertEq(success, true);
         assertEq(vm.envString("SOME_VERY_IMPORTANT_API_KEY"), "adifferentone");
 
         SolenvHelper.resetEnv();
@@ -60,10 +62,11 @@ contract SolenvMergeTest is Test {
         vm.setEnv("A_FALSE_BOOL",       "true");
 
         // act
-        Solenv.config(false);
+        bool success = Solenv.config(".env.test");
 
         // assert
         // from file
+        assertEq(success, true);
         assertEq(vm.envString("SOME_VERY_IMPORTANT_API_KEY"),   "omgnoway");
         assertEq(vm.envString("A_COMPLEX_ENV_VARIABLE"),        "y&2U9xiEINv!vM8Gez");
         assertEq(vm.envAddress("AN_ADDRESS"), 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2);
@@ -81,13 +84,16 @@ contract SolenvMergeTest is Test {
 }
 
 contract SolenvInSetupTest is Test {
+    bool private _success;
+
     function setUp() public {
         // act
-        Solenv.config();
+        _success = Solenv.config(".env.test");
     }
 
     function testEnv_InSetup() public {
         // assert
+        assertEq(_success, true);
         assertEq(vm.envString("WHY_USE_THIS_KEY"),              "because we can can can");
         assertEq(vm.envString("SOME_VERY_IMPORTANT_API_KEY"),   "omgnoway");
         assertEq(vm.envString("A_COMPLEX_ENV_VARIABLE"),        "y&2U9xiEINv!vM8Gez");
