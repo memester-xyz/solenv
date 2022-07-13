@@ -23,7 +23,7 @@ library SolenvHelper {
 }
 
 contract SolenvTest is Test {
-    function testEnvLoad() public {
+    function testEnv() public {
         // act
         Solenv.config();
 
@@ -42,7 +42,7 @@ contract SolenvTest is Test {
         SolenvHelper.resetEnv();
     }
 
-    function testAnotherFileName() public {
+    function testEnv_AnotherFilename() public {
         Solenv.config(".env.test");
 
         assertEq(vm.envString("SOME_VERY_IMPORTANT_API_KEY"), "adifferentone");
@@ -52,7 +52,7 @@ contract SolenvTest is Test {
 }
 
 contract SolenvMergeTest is Test {
-    function testEnvMerge() public {
+    function testEnv_Merge() public {
         // arrange
         vm.setEnv("WHY_USE_THIS_KEY",   "different value");
         vm.setEnv("A_NUMBER",           "1337");
@@ -86,7 +86,7 @@ contract SolenvInSetupTest is Test {
         Solenv.config();
     }
 
-    function testEnvLoad() public {
+    function testEnv_InSetup() public {
         // assert
         assertEq(vm.envString("WHY_USE_THIS_KEY"),              "because we can can can");
         assertEq(vm.envString("SOME_VERY_IMPORTANT_API_KEY"),   "omgnoway");
