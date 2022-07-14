@@ -24,7 +24,7 @@ library Solenv {
     }
 
     // todo: check if we can support setting delimiters
-    function _config(string memory filename, bool overwrite) private returns (bool success) {
+    function _config(string memory filename, bool overwrite) private {
         string[] memory inputs = new string[](3);
         inputs[0] = "sh";
         inputs[1] = "-c";
@@ -33,15 +33,6 @@ library Solenv {
         );
 
         bytes memory res = vm.ffi(inputs);
-        try vm.ffi(inputs) returns (bytes memory rRes) {
-            res = rRes;
-        } catch {
-            // failed to load the env from file, we assume if the script needs
-            // the env vars they will try to read them and subsequently error.
-            // ergo, it is preferable to just return gracefully here
-            return false;
-        }
-
         strings.slice memory data = abi.decode(res, (string)).toSlice();
 
         strings.slice memory lineDelim = "\n".toSlice();
@@ -68,23 +59,21 @@ library Solenv {
                 }
             }
         }
-
-        return true;
     }
 
-    function config(string memory filename, bool overwrite) internal returns (bool success) {
-        return _config(filename, overwrite);
+    function config(string memory filename, bool overwrite) internal {
+        _config(filename, overwrite);
     }
 
-    function config(string memory filename) internal returns (bool success) {
-        return config(filename, true);
+    function config(string memory filename) internal {
+        config(filename, true);
     }
 
-    function config(bool overwrite) internal returns (bool success) {
-        return config(DEFAULT_ENV_LOCATION, overwrite);
+    function config(bool overwrite) internal {
+        config(DEFAULT_ENV_LOCATION, overwrite);
     }
 
-    function config() internal returns (bool success) {
-        return config(DEFAULT_ENV_LOCATION);
+    function config() internal {
+        config(DEFAULT_ENV_LOCATION);
     }
 }

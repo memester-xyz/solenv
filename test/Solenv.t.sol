@@ -5,10 +5,8 @@ import "forge-std/Test.sol";
 import {Solenv} from "src/Solenv.sol";
 
 contract SolenvTest is Test {
-    bool private _success;
-
     function setUp() external {
-        _success = Solenv.config();
+        Solenv.config();
     }
 
     function _assertDefault() private {
@@ -51,14 +49,12 @@ contract SolenvTest is Test {
         _resetEnv();
 
         // LOAD DEFAULT CONFIG
-        bool success = Solenv.config();
-        assertEq(success, true);
+        Solenv.config();
         _assertDefault();
         _resetEnv();
 
         // TEST ANOTHER FILENAME
-        success = Solenv.config(".env.test");
-        assertEq(success, true);
+        Solenv.config(".env.test");
         assertEq(vm.envString("SOME_VERY_IMPORTANT_API_KEY"), "adifferentone");
         _resetEnv();
 
@@ -69,11 +65,11 @@ contract SolenvTest is Test {
         vm.setEnv("A_TRUE_BOOL",        "false");
         vm.setEnv("A_FALSE_BOOL",       "true");
 
-        success = Solenv.config(".env", false);
+        // act
+        Solenv.config(".env", false);
 
         // assert
         // from file
-        assertEq(success, true);
         assertEq(vm.envString("SOME_VERY_IMPORTANT_API_KEY"),   "omgnoway");
         assertEq(vm.envString("A_COMPLEX_ENV_VARIABLE"),        "y&2U9xiEINv!vM8Gez");
         assertEq(vm.envAddress("AN_ADDRESS"), 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2);
