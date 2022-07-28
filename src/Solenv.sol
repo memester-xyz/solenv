@@ -29,7 +29,7 @@ library Solenv {
         inputs[0] = "sh";
         inputs[1] = "-c";
         inputs[2] = string(
-            bytes.concat('cast abi-encode "response(bytes)" $(xxd -p -c 0 ', bytes(filename), ")")
+            bytes.concat('cast abi-encode "response(bytes)" $(xxd -p -c 999999999 ', bytes(filename), ")")
         );
 
         bytes memory res = vm.ffi(inputs);
