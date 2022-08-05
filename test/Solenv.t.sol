@@ -31,6 +31,10 @@ contract SolenvTest is Test {
 
         assertEq(vm.envString("SOME_VERY_IMPORTANT_API_KEY"), "adifferentone");
     }
+
+    function testDoesNotBreakWithoutFile() public {
+        Solenv.config(".env.none");
+    }
 }
 
 contract SolenvInSetupTest is Test {
