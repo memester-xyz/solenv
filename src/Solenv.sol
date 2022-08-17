@@ -29,31 +29,47 @@ library Solenv {
         inputs[0] = "sh";
         inputs[1] = "-c";
         inputs[2] = string(
-            bytes.concat('cast abi-encode "response(bytes)" $(xxd -p -c 999999999 ', bytes(filename), ")")
+            bytes.concat(
+                'cast abi-encode "response(bool)" $(test -f ',
+                bytes(filename),
+                ' && echo "true" || echo "false")'
+            )
         );
-
         bytes memory res = vm.ffi(inputs);
-        strings.slice memory data = abi.decode(res, (string)).toSlice();
 
-        strings.slice memory lineDelim = "\n".toSlice();
-        strings.slice memory keyDelim = "=".toSlice();
-        strings.slice memory commentDelim = "#".toSlice();
+        bool exists = abi.decode(res, (bool));
 
-        uint256 length = data.count(lineDelim) + 1;
-        for (uint256 i = 0; i < length; i++) {
-            strings.slice memory line = data.split(lineDelim);
-            if (!line.startsWith(commentDelim)) {
-                string memory key = line.split(keyDelim).toString();
-                // Ignore empty lines
-                if (bytes(key).length != 0) {
-                    if (overwrite == true) {
-                        vm.setEnv(key, line.toString());
-                    } else {
-                        if (_envExists(key)) {
-                            // pre-existing found, do not overwrite
-                        } else {
-                            // pre-existing not found, insert
+        if (exists) {
+            inputs[0] = "sh";
+            inputs[1] = "-c";
+            inputs[2] = string(
+                bytes.concat('cast abi-encode "response(bytes)" $(xxd -p -c 999999999 ', bytes(filename), ")")
+            );
+
+            res = vm.ffi(inputs);
+
+            strings.slice memory data = abi.decode(res, (string)).toSlice();
+
+            strings.slice memory lineDelim = "\n".toSlice();
+            strings.slice memory keyDelim = "=".toSlice();
+            strings.slice memory commentDelim = "#".toSlice();
+
+            uint256 length = data.count(lineDelim) + 1;
+            for (uint256 i = 0; i < length; i++) {
+                strings.slice memory line = data.split(lineDelim);
+                if (!line.startsWith(commentDelim)) {
+                    string memory key = line.split(keyDelim).toString();
+                    // Ignore empty lines
+                    if (bytes(key).length != 0) {
+                        if (overwrite == true) {
                             vm.setEnv(key, line.toString());
+                        } else {
+                            if (_envExists(key)) {
+                                // pre-existing found, do not overwrite
+                            } else {
+                                // pre-existing not found, insert
+                                vm.setEnv(key, line.toString());
+                            }
                         }
                     }
                 }

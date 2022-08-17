@@ -1,8 +1,11 @@
-# <h1 align="center"> Solenv </h1>
+# <h1 align="center"> solenv </h1>
 
 **Load .env files in Solidity scripts/tests**
 
 ![Github Actions](https://github.com/memester-xyz/solenv/workflows/test/badge.svg)
+
+# ⚠️ Note ⚠️
+[Foundry recently shipped default dotenv parsing](https://github.com/foundry-rs/foundry/pull/2587). It's in active development but soon the solenv library will no longer be needed. Yay for upstreaming!
 
 ## Installation
 
@@ -74,7 +77,7 @@ forge test
 
 ## Why?
 
-[Forge scripting](https://book.getfoundry.sh/tutorials/solidity-scripting.html) is becoming more popular. With Solenv your scripts are even more powerful and natural to work with.
+[Forge scripting](https://book.getfoundry.sh/tutorials/solidity-scripting.html) is becoming more popular. With solenv your scripts are even more powerful and natural to work with.
 
 ## Development
 
